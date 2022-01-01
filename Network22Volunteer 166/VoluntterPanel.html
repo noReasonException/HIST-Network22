@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<!-- install fonts-->
+<htm >
+  <head>
+    <link rel="stylesheet" type="text/css" href="./css/VolunteerPanelStyle.css">
+    <script>
+    /*
+    ImageObjects array dockstring
+    ImageObjects[i]
+              i = 1 - i = 13  -> PressureButtons 1 to n
+              i = 14          -> Temperatures background
+              i = 15          -> Hamburger Menu
+              i = 16          -> Activate_button_off (for stop join into net)
+              i = 17          -> Activate_button_on  (for start join into net)
+              i = 18          -> graph background
+              i = 19          -> CPU Pressure
+              i = 20          -> Memory Usage
+              i = 21          -> Hard Drive
+              i = 22          -> Network Pressure
+    */
+    //context.drawImage(object , start_x,start_y,widthofimage,heightofimage)
+    //ctx.fillRect(0,0,canvas.width,canvas.height); //fill with white
+    //ctx.globalAlpha = 0.9;//opacity
+    //ctx.fillStyle ="color"//color to drawImag
+
+      counter=0;//set counter to zero
+      var ImageObjects=[]; // will include all PressureButtons object loaded in html below
+      var PressureLevel = 1;
+      var JoinInNetwork =1; // 1 means on // 0 means off
+      var canvas;
+      var ctx;
+
+      var ComputerCPUTemperature;
+      var ComputerMoboTemperature;
+      var ComputerHDTemperature;
+      var LocalIP ;
+      var PublicIPv4;
+      var PublicIPv6
+      var ListenPort;
+
+      var JoinedOnDomainName;
+
+
+
+
+
+      console.log('Memory initialization ok');
+
+      function returnPercentIntoPixels(percent,flag){
+        console.log(((percent*window.innerWidth)/100)>>0);
+        if(flag='width'){return ((percent*window.innerWidth)/100)>>0;}
+        else if(flag='height'){return (percent*window.innerHeight/100)>>0;}
+        else {throw 'Non valid flag argument on function returnPercentIntoPixels()';}
+
+
+
+      }
+      function initialization(){ // fuction wiitch ensure that everything is loaded
+        console.log('Loading extend files into buffer(innerHTML) ');
+        counter+=1; // add the static counter +1
+        if(counter==18){ //when everything is loaded;
+          console.log('extend files loaded into buffer  ');
+          Load(); //start load procedure
+        }
+      }
+      function Load(){
+        canvas = document.getElementById("main"); // get canvas object
+        ctx = canvas.getContext("2d"); //get the 2d libraries
+
+        canvas.width=window.innerWidth;//fullscreen canvas width
+        canvas.height=window.innerHeight;//fullascreen canvas height
+
+        console.log('Loading extend files into memory (innerJavascript)')
+        ImageObjects = []; //define empty array
+        for(i=1;i<=22;i++){ //load all files into it
+          ImageObjects[i]= document.getElementById('Image'+i.toString());
+          console.log('Image'+i.toString()+'LOADED INTO MEM ');
+        }
+        console.log('extend files loaded into memory');
+        console.log('Start MainLoop()');
+        initialization_computer_logs();
+        setInterval(MainLoop,1000); //start Mainloop with 4fps(call every n/4 sec)
+      }
+      function context2D_configs_load(){
+        ctx.font="30px Ubuntu"; //set arial font of size 30px;
+        ctx.fillStyle="white"; //set fillStyle to white
+      }
+      function UpdateTemperatures(){
+        ComputerCPUTemperature=42;
+        ComputerMoboTemperature=35;
+        ComputerHDTemperature=32;
+      }
+      function initialization_computer_logs(){
+        LocalIP="127.0.0.1";
+        PublicIpv4 = "94.71.112.53";
+        PublicIPv6 = "0";
+        ListenPort = 59764;
+        JoinedOnDomainName="hey.com"
+
+      }
+      function DimensionsUpdate(){
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      }
+      function BackgroundDraw(){
+        ctx.clearRect(0,0,canvas.width,canvas.height);//clear whole canvas
+        ctx.fillStyle="black";//να γεμιζει μαυρο
+        ctx.globalAlpha=0.8; // το Opacity ,περατοτητα , οριζεται σε 0.6
+        ctx.fillRect(0,0,canvas.width,canvas.height); //σχεδιασμος μαυρου φοντου
+        ctx.fillStyle="white";
+        ctx.globalAlpha=1;
+      }
+      function PanelDrawBasic(){
+        ctx.drawImage(ImageObjects[15],returnPercentIntoPixels(5,'width'),30);
+        ctx.fillText('Network22',returnPercentIntoPixels(10,'width'),60);
+        ctx.font="22px Ubuntu";
+        ctx.fillStyle="grey"
+        ctx.fillText('Overview of volunteer ID:',returnPercentIntoPixels(10,'width'),120);
+        ctx.fillStyle="white"
+      }
+
+      function DrawAnimateGraph(){
+        ctx.drawImage(ImageObjects[18],returnPercentIntoPixels(2,'width'),300);
+      }
+      function DrawAnimateStats(){
+        //computer statistics(static)
+        var x=returnPercentIntoPixels(5,'width');
+        for(i=19;i<=22;i++){
+          ctx.drawImage(ImageObjects[i],x,150,returnPercentIntoPixels(10,'width'),returnPercentIntoPixels(11,'height'));
+          x+=150;
+        }
+      }
+      function TemperatureStatsDraw(){
+        ctx.fillStyle="#318191";
+        var fillarea_width = returnPercentIntoPixels(60,'width');
+        var fillarea_height = 20;
+        ctx.fillRect(fillarea_width,20,returnPercentIntoPixels(20,'width'),canvas.height);
+        ctx.fillStyle='white';
+        /*
+        ctx.fillText('Cpu Temperature',returnPercentIntoPixels(62,'width'),200);
+        ctx.fillText(ComputerCPUTemperature.toString()+'c',returnPercentIntoPixels(85,'width'),200);
+
+        ctx.fillText('MotherBoard Temperature',returnPercentIntoPixels(62,'width'),250);
+        ctx.fillText(ComputerMoboTemperature.toString()+'c',returnPercentIntoPixels(85,'width'),250);
+
+        ctx.fillText('Hard Drive Temperature',returnPercentIntoPixels(62,'width'),300);
+        ctx.fillText(ComputerHDTemperature.toString()+'c',returnPercentIntoPixels(85,'width'),300);
+
+        ctx.fillText('Local IP',returnPercentIntoPixels(62,'width'),350);
+        ctx.fillText(LocalIP.toString(),returnPercentIntoPixels(80,'width'),350);
+
+
+        ctx.fillText('IP version 4',returnPercentIntoPixels(62,'width'),400);
+        ctx.fillText(PublicIpv4.toString(),returnPercentIntoPixels(80,'width'),400);
+
+        ctx.fillText('IP version 6',returnPercentIntoPixels(62,'width'),450);
+        ctx.fillText(PublicIPv6.toString(),returnPercentIntoPixels(80,'width'),450);
+
+        ctx.fillText('Port',returnPercentIntoPixels(62,'width'),500);
+        ctx.fillText(ListenPort.toString(),returnPercentIntoPixels(80,'width'),500);
+
+        ctx.fillText('Joined On',returnPercentIntoPixels(62,'width'),550);
+        ctx.fillText(JoinedOnDomainName.toString(),returnPercentIntoPixels(80,'width'),550);
+        */
+      }
+      function SettingsElementsDraw(){
+        ctx.fillText('SettingsSection',returnPercentIntoPixels(81,'width'),60);
+        ctx.drawImage(ImageObjects[PressureLevel],returnPercentIntoPixels(72,'width'),60,returnPercentIntoPixels(30,'width'),returnPercentIntoPixels(30,'height'));
+      }
+      function MainLoop(){
+          //προσοχη , καθαριζει ολο το buffer , ακομα και τις ρυθμισεις του ctx ;)
+          DimensionsUpdate();
+          context2D_configs_load();
+          BackgroundDraw();
+          PanelDrawBasic();
+          DrawAnimateGraph();
+          DrawAnimateStats();
+          UpdateTemperatures();
+          TemperatureStatsDraw();
+          SettingsElementsDraw();
+
+
+          //Dunamic code goes here!
+          PressureLevel+=1;
+          if(PressureLevel==13){PressureLevel=1;}
+          if(JoinInNetwork==0){JoinInNetwork=1;}
+          else {JoinInNetwork=0;}
+
+
+
+      }
+
+      </script>
+  </head>
+  <body>
+    <img width ="0" height="0"src="./img/Value1.png" onLoad="initialization()" id="Image1"></img>
+    <img width ="0" height="0"src="./img/Value2.png" onLoad="initialization()" id="Image2"></img>
+    <img width ="0" height="0"src="./img/Value3.png" onLoad="initialization()" id="Image3"></img>
+    <img width ="0" height="0"src="./img/Value4.png" onLoad="initialization()" id="Image4"></img>
+    <img width ="0" height="0"src="./img/Value5.png" onLoad="initialization()" id="Image5"></img>
+    <img width ="0" height="0"src="./img/Value6.png" onLoad="initialization()" id="Image6"></img>
+    <img width ="0" height="0"src="./img/Value7.png" onLoad="initialization()" id="Image7"></img>
+    <img width ="0" height="0"src="./img/Value8.png" onLoad="initialization()" id="Image8"></img>
+    <img width ="0" height="0"src="./img/Value9.png" onLoad="initialization()" id="Image9"></img>
+    <img width ="0" height="0"src="./img/Value10.png" onLoad="initialization()" id="Image10"></img>
+    <img width ="0" height="0"src="./img/Value11.png" onLoad="initialization()" id="Image11"></img>
+    <img width ="0" height="0"src="./img/Value12.png" onLoad="initialization()" id="Image12"></img>
+    <img width ="0" height="0"src="./img/Value13.png" onLoad="initialization()" id="Image13"></img>
+    <img width ="0" height="0"src="./img/TemperatureBackground.png" onLoad="initialization()" id="Image14"></img>
+    <img width ="0" height="0"src="./img/hamburger.png" onLoad="initialization()" id="Image15"></img>
+    <img width ="0" height="0"src="./img/Activateoff.png" onLoad="initialization()" id="Image16"></img>
+    <img width ="0" height="0"src="./img/Activateon.png" onLoad="initialization()" id="Image17"></img>
+    <img width ="0" height="0"src="./img/graph.png" onLoad="initialization()" id="Image18"></img>
+
+    <img width ="0" height="0"src="./img/CPU Pressure.png" onLoad="initialization()" id="Image19"></img>
+    <img width ="0" height="0"src="./img/Memory Usage.png" onLoad="initialization()" id="Image20"></img>
+    <img width ="0" height="0"src="./img/HD ActiveTime.png" onLoad="initialization()" id="Image21"></img>
+    <img width ="0" height="0"src="./img/Network Usage.png" onLoad="initialization()" id="Image22"></img>
+
+    <canvas width="500" height="500" style="opacity:0.9" id="main"></canvas>
+  </body>
+</html>

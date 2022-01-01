@@ -1,0 +1,97 @@
+body{
+	background-image:url("bg.jpg");
+	background-repeat:no-repeat;
+	background-attachment:fixed;
+
+    -webkit-filter: brightness(200%); /* Chrome, Safari, Opera */
+    filter: brightness(200%);
+
+}
+#nav{
+	border-radius:25px;
+	display:inline;
+	margin-top:2%;
+	margin-right:5%;
+	margin-left:5%;
+	padding:5 5 5 5 ;
+	color:#000000;
+	box-shadow: 2px 2px 2px #ffffff;
+	filter: alpha(opacity=40);
+	opacity: 0.3;
+	text-align:center;
+	text-align:center;
+	font-family:navfont;
+	font-size:25;
+	
+
+}
+#nav_first_element{
+	align:center;
+	margin-left:2%;
+	color:white;
+	text-decoration:none;
+}
+#nav_element{
+	align:center;
+	margin-left:5%;
+	color:white;
+	text-decoration:none;
+}
+button{
+	border-radius:27px;
+	padding:10 50 10 50;
+	margin:0 50% 0 45%;
+	text-align:center;
+	display:inline;
+	background:#ffffff;
+	margin-bottom:10%;
+	font-size:17;
+	opacity:0.5;
+	
+	
+}
+#pres{
+	display:block;
+	font-size:70px;
+	font-family:navfont;
+	text-align:center;
+	padding-top:20%;
+	padding-bottom:1%;
+	color:white;
+	filter:brightness(120%);
+	
+}
+#pres_sec{
+	display:block;
+	font-size:40px;
+	font-family:navfont;
+	text-align:center;
+	
+	color:grey;
+	filter:brightness(60%);
+}
+
+
+#maintext{
+	border-radius: 25px;
+    background: #A9A9A9;
+    padding: 20px;    
+	display:block;
+	box-shadow: 5px 1px 1px #A9A9A9;
+	opacity:0.5;
+	margin-left:3%;
+	margin-right:3%;
+	
+}
+#title{
+	font-size:36px;
+}
+#normaltext{
+	font-size:18px;
+}
+
+@font-face{
+	font-family:"navfont";
+	src:url("Mimix Light.ttf");
+}
+
