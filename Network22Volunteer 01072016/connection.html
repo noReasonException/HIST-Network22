@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" type="text/css"  href="./css/connectingStyle.css">
+
+<script>document.location="VoluntterPanel.html";</script>
+
+<script>
+  //initialization
+  var counter=0;
+  var canvas = document.getElementsById('canvas');
+  var ctx = canvas.getContext('2d');
+  function Initialization(){
+    counter+=1;
+    if(counter=1){
+      Load();
+
+    }
+
+  }
+  function Load(){
+    return false;
+  }
+  function Load2DConfigs(){return false;}
+  function MainLoop(){return false;}
+
+
+
+</script>
+<script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+</head>
+<body>
+<canvas width="0" height="0" id ="canvas"></canvas>
+</body>
+</html>

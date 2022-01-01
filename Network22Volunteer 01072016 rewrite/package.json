@@ -1,0 +1,22 @@
+{
+  "name": "network22volunteerscript",
+  "version": "0.0.2",
+  "description": "The official script for join in the Network22",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron index.js"
+  },
+  "keywords": [
+    "network22",
+    "join",
+    "sign",
+    "in"
+  ],
+  "author": "DreamGun , Athens Coding Scene",
+  "license": "SEE LICENSE IN AthensCodingScene_license.txt",
+  "devDependencies": {
+    "electron-prebuilt": "^1.2.5",
+    "install": "^0.8.1"
+  }
+}
